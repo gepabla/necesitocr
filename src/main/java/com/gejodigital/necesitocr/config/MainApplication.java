@@ -11,10 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.gejodigital.necesitocr"})
 @EnableAutoConfiguration
-
-@EnableJpaRepositories("com.gejodigital.necesitocr.repositories")
 @EnableTransactionManagement
-@EntityScan(basePackages = "com.gejodigital.necesitocr.ejb")
 
 public class MainApplication{
 	
