@@ -31,7 +31,7 @@ public class SupplierWS {
 	@RequestMapping(value="/getByTags", method = RequestMethod.POST)
 	public SupplierResponse getByTags(@RequestBody List<String> tagNames,HttpServletResponse httpResponse){
 		SupplierResponse response = new SupplierResponse();
-		try {			
+		try {					
 			
 			List<Supplier> suppliers = new ArrayList<Supplier>();
 			
