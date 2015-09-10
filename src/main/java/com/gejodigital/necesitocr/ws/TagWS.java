@@ -1,5 +1,6 @@
 package com.gejodigital.necesitocr.ws;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +28,8 @@ public class TagWS {
 	public TagResponse getByName(@RequestBody String tagName,HttpServletResponse httpResponse){
 		TagResponse response = new TagResponse();
 		try {
-			List<Tag> tags = service.findByName(tagName);
+			List<Tag> tags = new ArrayList<Tag>(); 
+			tags.add(service.findByName(tagName));
 			List<TagDTO> dtos = tags.stream().map(tag -> {
 				TagDTO tmp = new TagDTO();
 				tmp.setName(tag.getName());

@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -22,8 +24,9 @@ public class Tag implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="tag_id")
-	private int tagId;
+	private Integer tagId;
 
 	private String name;
 
@@ -34,11 +37,11 @@ public class Tag implements Serializable {
 	public Tag() {
 	}
 
-	public int getTagId() {
+	public Integer getTagId() {
 		return this.tagId;
 	}
 
-	public void setTagId(int tagId) {
+	public void setTagId(Integer tagId) {
 		this.tagId = tagId;
 	}
 

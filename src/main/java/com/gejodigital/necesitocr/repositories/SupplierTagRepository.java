@@ -3,9 +3,9 @@ package com.gejodigital.necesitocr.repositories;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.gejodigital.necesitocr.entities.Tag;
+import com.gejodigital.necesitocr.entities.SupplierTag;
 
 @Repository
-public interface TagRepository extends CrudRepository<Tag, Integer>{
-	public Tag findFirstByName(String name);
+public interface SupplierTagRepository extends CrudRepository<SupplierTag, Integer>{
+
 }

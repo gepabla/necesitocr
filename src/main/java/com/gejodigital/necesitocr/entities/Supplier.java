@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -22,8 +24,9 @@ public class Supplier implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="supplier_id")
-	private int supplierId;
+	private Integer supplierId;
 
 	private String address;
 
@@ -40,11 +43,11 @@ public class Supplier implements Serializable {
 	public Supplier() {
 	}
 
-	public int getSupplierId() {
+	public Integer getSupplierId() {
 		return this.supplierId;
 	}
 
-	public void setSupplierId(int supplierId) {
+	public void setSupplierId(Integer supplierId) {
 		this.supplierId = supplierId;
 	}
 

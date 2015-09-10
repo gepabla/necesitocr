@@ -1,7 +1,5 @@
 package com.gejodigital.necesitocr.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +12,8 @@ public class TagServiceImpl implements TagService {
 	@Autowired private TagRepository tagRepo;
 	
 	@Override
-	public List<Tag> findByName(String name) {
-		return tagRepo.findByName(name);
+	public Tag findByName(String name) {
+		return tagRepo.findFirstByName(name);
 	}
 
 }

@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,8 +24,9 @@ public class SupplierTag implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="supplier_tags_id")
-	private int supplierTagsId;
+	private Integer supplierTagsId;
 
 	//bi-directional many-to-one association to Supplier
 	@ManyToOne
@@ -38,11 +41,11 @@ public class SupplierTag implements Serializable {
 	public SupplierTag() {
 	}
 
-	public int getSupplierTagsId() {
+	public Integer getSupplierTagsId() {
 		return this.supplierTagsId;
 	}
 
-	public void setSupplierTagsId(int supplierTagsId) {
+	public void setSupplierTagsId(Integer supplierTagsId) {
 		this.supplierTagsId = supplierTagsId;
 	}
 
