@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
 /**
@@ -15,6 +16,7 @@ import javax.persistence.OneToMany;
  * 
  */
 @Entity
+@Table(name="tag")
 @NamedQuery(name="Tag.findAll", query="SELECT t FROM Tag t")
 public class Tag implements Serializable {
 	private static final long serialVersionUID = 1L;
