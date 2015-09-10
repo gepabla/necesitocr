@@ -5,7 +5,7 @@
 	<groupId>com.gejodigital</groupId>
 	<artifactId>necesitocr</artifactId>
 	<name>NecesitoCR</name>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	
 	<parent>
