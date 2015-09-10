@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.BeanUtils;
@@ -19,13 +20,14 @@ import com.gejodigital.necesitocr.dto.SupplierDTO;
 import com.gejodigital.necesitocr.entities.Supplier;
 import com.gejodigital.necesitocr.response.SupplierResponse;
 import com.gejodigital.necesitocr.service.SupplierService;
+import com.gejodigital.necesitocr.service.TagService;
 
 @RestController
 @RequestMapping(value="/api/supplier")
 public class SupplierWS {
 	
 	@Autowired private SupplierService supplierService;
-	
+	@Autowired private TagService tagService;
 	@Autowired private EntityManagerFactory emf;
 	
 	@RequestMapping(value="/getByTags", method = RequestMethod.POST)
@@ -33,16 +35,32 @@ public class SupplierWS {
 		SupplierResponse response = new SupplierResponse();
 		try {					
 			
-			List<Supplier> suppliers = new ArrayList<Supplier>();
+			List<Supplier> suppliersTmp = new ArrayList<Supplier>();			
+			StringBuilder builder = new StringBuilder();
 			
-			tagNames.forEach(name -> {
+			tagNames.forEach(name -> {			
+				builder.append(" %or% t.name like '%"+name+"%' ");				
 				List<Supplier> tmp = supplierService.findBySupplierTags_Tag_NameLike("%"+name+"%");
 				if(tmp != null && tmp.size() > 0){
-					suppliers.addAll(tmp);
+					suppliersTmp.addAll(tmp);
+				}
+			});			
+			List<Supplier> suppliers = suppliersTmp.stream().distinct().collect(Collectors.toList());
+			
+			String queryStr = "SELECT t.tagId FROM Tag t where " + builder.toString().replaceFirst("%or%", "").replace("%or%", "or");			
+			TypedQuery<Integer> query = emf.createEntityManager().createQuery(queryStr, Integer.class);
+			List<Integer> tagIds = query.getResultList();
+			
+			List<Supplier> finalSuppliers = new ArrayList<Supplier>();
+			
+			suppliers.forEach(sup -> {
+				List<Integer> supTagIds = sup.getSupplierTags().stream().map(st -> st.getTag().getTagId()).collect(Collectors.toList());
+				if(supTagIds.containsAll(tagIds)){
+					finalSuppliers.add(sup);
 				}
 			});
 			
-			List<SupplierDTO> dtos = suppliers.stream().distinct().map(sup -> {
+			List<SupplierDTO> dtos = finalSuppliers.stream().distinct().map(sup -> {
 				SupplierDTO tmp = new SupplierDTO();
 				BeanUtils.copyProperties(sup, tmp);
 				return tmp;

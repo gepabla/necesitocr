@@ -19,29 +19,11 @@
 		<org.springframework-version>4.1.7.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
-		<querydsl.version>4.0.4</querydsl.version>
+		<querydsl.version>3.6.0</querydsl.version>
 	</properties>
 	
 	<dependencies>
-	
-		<dependency>
-		  <groupId>com.mysema.querydsl</groupId>
-		  <artifactId>querydsl-apt</artifactId>
-		  <version>${querydsl.version}</version>
-		  <scope>provided</scope>
-		</dependency>    
-		    
-		<dependency>
-		  <groupId>com.mysema.querydsl</groupId>
-		  <artifactId>querydsl-jpa</artifactId>
-		  <version>${querydsl.version}</version>
-		</dependency>
-		
-		<dependency>
-		  <groupId>org.slf4j</groupId>
-		  <artifactId>slf4j-log4j12</artifactId>		  
-		</dependency> 
-	
+				
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
@@ -115,49 +97,23 @@
 			
 	<build>
 		<plugins>
+					
+		      <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-compiler-plugin</artifactId>		        
+		        <configuration>
+		          <source>1.8</source>
+		          <target>1.8</target>
+		        </configuration>
+		      </plugin>
+			
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-		        <groupId>com.mysema.maven</groupId>
-		        <artifactId>apt-maven-plugin</artifactId>
-		        <version>1.1.3</version>
-		        <executions>
-		          <execution>
-		            <goals>
-		              <goal>process</goal>
-		            </goals>
-		            <configuration>
-		              <outputDirectory>target/generated-sources/java</outputDirectory>
-		              <processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
-		            </configuration>
-		          </execution>
-		        </executions>
-		        <dependencies>
-		          <dependency>
-		            <groupId>com.querydsl</groupId>
-		            <artifactId>querydsl-apt</artifactId>
-		            <version>${querydsl.version}</version>
-		          </dependency>
-		          <dependency>
-		                <groupId>com.mysema.querydsl</groupId>
-		                <artifactId>querydsl-jpa</artifactId>
-		                <classifier>apt</classifier>
-		                <version>${querydsl.version}</version>
-		            </dependency>
-		        </dependencies>
-		      </plugin>
+			</plugin>			
 		</plugins>
 	</build>
-	
-	<repositories>
-				<repository>
-					<id>querydsl</id>
-					<name>QueryDsl</name>
-					<url>http://source.mysema.com/maven2/releases</url>
-				</repository>
-			</repositories>
+
 	
 </project>
 
