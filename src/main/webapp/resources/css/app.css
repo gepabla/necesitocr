@@ -31,8 +31,8 @@ body .navbar-default.main-navbar a{
 }
 
 #mainview{
-	height: 40px;
-	width: 497px;
+	height: 252px;
+	width: 780px;
 	margin: auto;
   	position: absolute;
   	top: 0; left: 0; bottom: 0; right: 0;
@@ -51,4 +51,13 @@ body .navbar-default.main-navbar a{
 	color: #fff !important;
 	background-image: none;
 	background-color:#FE279A !important;
+}
+
+#mainview .eva-container img{
+	width: 250px;
+	height: 250px;
+}
+
+#mainview .form-inline{
+	margin-top: 200px;
 }
