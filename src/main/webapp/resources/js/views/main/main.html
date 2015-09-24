@@ -1,19 +1,45 @@
 <title>NecesitoCR | Main</title>
 <div id="mainview">
 	
-	<div class="pull-left eva-container"><img src="resources/images/eva-web.png"></div>
-	<form class="form-inline pull-right">
-		
-		<div class="form-group">
-			<label for="service">necesito</label> 
-			<input type="text" class="form-control" id="service" placeholder="fontanero" ng-model="searchTermService">
+	<div class="search-container" search-container="searchContainerModel">
+		<div class="center-form" >
+			<div class="pull-left eva-container"><img src="resources/images/eva-web.png"></div>
+<!-- 			<div class="pull-left eva-container" ng-show="searching"><img src="resources/images/searching.gif"></div> -->
+			<form class="form-inline pull-right" ng-show="showSearch">
+				
+				<div class="form-group">
+					<label for="service">necesito</label> 
+					<input type="text" class="form-control" id="service" placeholder="fontanero" ng-model="searchTermService">
+				</div>
+				
+				<div class="form-group">
+					<label for="location">en</label> <input type="text" class="form-control" id="location" placeholder="Alajuela" ng-model="searchTermLocation">
+				</div>
+				
+				<button type="submit" ng-click="search()" class="btn btn-default">buscar</button>
+			</form>
+		</div>		
+	</div>
+	
+	<div class="resultsContainer" ng-show="showResults">
+		<div class="container">
+			<div class="resultItem row" ng-repeat="result in results">
+				<div class="result-name col-md-4">
+					{{result.name}}
+				</div>
+				<div class="result-desc col-md-2">
+					{{result.description}}
+				</div>
+				<div class="result-addr col-md-3">
+					{{result.address}}
+				</div>
+				<div class="result-actions col-md-3">
+					<div>
+						<button type="button" class="btn btn-primary">Primary</button>
+						<button type="button" class="btn btn-primary">Primary</button>
+					</div>				
+				</div>
 		</div>
-		
-		<div class="form-group">
-			<label for="location">en</label> <input type="text" class="form-control" id="location" placeholder="Alajuela" ng-model="searchTermLocation">
-		</div>
-		
-		<button type="submit" ng-click="search()" class="btn btn-default">buscar</button>
-	</form>
-
+		</div>		
+	</div>	
 </div>
