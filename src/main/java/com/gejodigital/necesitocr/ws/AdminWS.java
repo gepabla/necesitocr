@@ -75,6 +75,53 @@ public class AdminWS {
 		
 		return response;
 	}
+	
+	@RequestMapping(value="/loadWordArticles", method=RequestMethod.GET)
+    public @ResponseBody String loadWordArticlesInfo() {		
+        return "You can upload a file by posting to this same URL.";
+    }
+	
+	@RequestMapping(value="/loadWordArticles", method = RequestMethod.POST)
+	public @ResponseBody BaseResponse loadWordArticles(@RequestParam("file") MultipartFile file,HttpServletResponse httpResponse){
+		BaseResponse response = new BaseResponse();
+		try {
+			
+			if (!file.isEmpty()) {
+	            try {
+	            	File newFile = new File("file.csv");
+	                byte[] bytes = file.getBytes();
+	                BufferedOutputStream stream =
+	                        new BufferedOutputStream(new FileOutputStream(newFile));
+	                stream.write(bytes);
+	                stream.close();
+	                
+	                CsvReader reader = createCsvReader(newFile);
+	    			
+	                service.loadWordArticles(reader.readRecords());
+	                
+	    			response.setMessage(HttpStatus.OK.getReasonPhrase());
+	    			response.setStatusCode(HttpStatus.OK.value());
+	            } catch (Exception e) {
+	            	e.printStackTrace();
+	            	response.setMessage(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
+	    			response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+	    			httpResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());	
+	            }
+	        } else {
+	        	response.setMessage(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
+				response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+				httpResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());	
+	        }						
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setMessage(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
+			response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+			httpResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());			
+		}
+		
+		return response;
+	}
+	
 	private CsvReader createCsvReader(File file) {
         try {           
             Reader reader = Files.newReader(file, Charset.forName("UTF-8"));

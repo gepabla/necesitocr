@@ -2,10 +2,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="now" value="<%=new java.util.Date().getTime()%>" />
 
-<script src="resources/js/lib/angular/angular.min.js"></script>
 <script src="resources/js/lib/jquery/jquery-2.1.4.min.js"></script>
+<script src="resources/js/lib/angular/angular.min.js"></script>
+<script src="resources/js/lib/angular/angular-animate.js"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js"></script>
-
+<script src="resources/bootstrap/js/ui-bootstrap-tpls-0.13.4.js"></script>
 <!-- modules -->
 <script src="resources/js/lib/angular/ngroute/angular-route.min.js"></script>
 
