@@ -1,6 +1,7 @@
 package com.gejodigital.necesitocr.ws;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +22,7 @@ import com.gejodigital.necesitocr.entities.Supplier;
 import com.gejodigital.necesitocr.response.SupplierResponse;
 import com.gejodigital.necesitocr.service.SupplierService;
 import com.gejodigital.necesitocr.service.TagService;
+import com.gejodigital.necesitocr.service.WordArticleService;
 
 @RestController
 @RequestMapping(value="/api/supplier")
@@ -28,12 +30,18 @@ public class SupplierWS {
 	
 	@Autowired private SupplierService supplierService;
 	@Autowired private TagService tagService;
+	@Autowired private WordArticleService wordArticleService;
 	@Autowired private EntityManagerFactory emf;
 	
 	@RequestMapping(value="/getByTags", method = RequestMethod.POST)
-	public SupplierResponse getByTags(@RequestBody List<String> tagNames,HttpServletResponse httpResponse){
+	public SupplierResponse getByTags(@RequestBody String searchTerm,HttpServletResponse httpResponse){
 		SupplierResponse response = new SupplierResponse();
 		try {					
+			String cleanedSearchTerm = wordArticleService.cleanSearchTerm(searchTerm);			
+			List<String> tagNames = new ArrayList<String>();
+			Arrays.asList(cleanedSearchTerm.split("\\s+")).forEach(str -> {
+				tagNames.add(str.replace("+"," "));
+			});
 			
 			List<Supplier> suppliersTmp = new ArrayList<Supplier>();			
 			StringBuilder builder = new StringBuilder();

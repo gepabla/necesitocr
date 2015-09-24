@@ -19,12 +19,23 @@ angular.module('necesitocr.mainView', ['ngRoute'])
 	$scope.searchContainerModel = {isBigContainer :  true};
 	$scope.results = [];
 	
+	$scope.searchTags = function(val) {		
+	    return $http.get('api/tag/searchByName', {
+	      params: {
+	    	  tagName: val	        
+	      }
+	    }).then(function(response){	    	
+	      return response.data.tags.map(function(item){
+	        return item.name;
+	      });
+	    });
+	  };
+	
 	$scope.search = function(){	
 		$scope.searching = true;
-		var requestObj = [$scope.searchTermService,$scope.searchTermLocation];
+		var requestObj = ($scope.searchTermLocation === "") ? $scope.searchTermService : $scope.searchTermService + " " +$scope.searchTermLocation.replace(/\s/g,"+");
 		console.log(requestObj);
-		$http.post($scope.searchUrl,requestObj).success(function(data){
-			console.log(data);	
+		$http.post($scope.searchUrl,requestObj).success(function(data){		
 			$scope.results = data.suppliers;
 			$scope.searchContainerModel.isBigContainer = false;			
 			$scope.showResults = true;

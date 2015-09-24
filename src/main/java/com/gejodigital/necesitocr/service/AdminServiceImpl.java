@@ -1,9 +1,7 @@
 package com.gejodigital.necesitocr.service;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -14,9 +12,11 @@ import org.springframework.stereotype.Service;
 import com.gejodigital.necesitocr.entities.Supplier;
 import com.gejodigital.necesitocr.entities.SupplierTag;
 import com.gejodigital.necesitocr.entities.Tag;
+import com.gejodigital.necesitocr.entities.WordArticle;
 import com.gejodigital.necesitocr.repositories.SupplierRepository;
 import com.gejodigital.necesitocr.repositories.SupplierTagRepository;
 import com.gejodigital.necesitocr.repositories.TagRepository;
+import com.gejodigital.necesitocr.repositories.WordArticleRepository;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -30,6 +30,7 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired private TagRepository tagR;
 	@Autowired private SupplierRepository supR;
 	@Autowired private SupplierTagRepository stR;
+	@Autowired private WordArticleRepository wordArticleR;
 	
 	@Override
 	@Transactional
@@ -78,6 +79,18 @@ public class AdminServiceImpl implements AdminService {
 			});
 		});
 		
+	}
+
+	@Override
+	@Transactional
+	public void loadWordArticles(List<List<String>> inputArr) {
+		wordArticleR.deleteAll();
+		inputArr.forEach(inputArtArr ->{			
+			WordArticle art = new WordArticle();
+			art.setWordArticle(inputArtArr.get(0));
+			System.out.println(art);
+			wordArticleR.save(art);
+		});
 	}
 
 }
