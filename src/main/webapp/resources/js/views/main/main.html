@@ -3,9 +3,9 @@
 	
 	<div class="search-container" search-container="searchContainerModel">
 		<div class="center-form" >
-			<div class="pull-left eva-container"><img src="resources/images/eva-web.png"></div>
-<!-- 			<div class="pull-left eva-container" ng-show="searching"><img src="resources/images/searching.gif"></div> -->
-			<form class="form-inline pull-right" ng-show="showSearch"> 
+			<div class="eva-container" ng-show="searching"><img class="searching" src="resources/images/searching.gif"></div>
+			<div class="eva-container" ng-class="{showResultsView:showResults}" ng-hide="searching"><img class="static" src="resources/images/eva-web-{{mood}}.png"></div>
+			<form class="form-inline" ng-show="showSearch"> 
 				
 				<div class="form-group">
 					<label for="service">necesito</label> 
@@ -19,6 +19,7 @@
 				<button type="submit" ng-click="search()" class="btn btn-default">buscar</button>
 			</form>
 		</div>		
+		
 	</div>
 	
 	<div class="resultsContainer" ng-show="showResults">

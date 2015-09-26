@@ -18,6 +18,7 @@ angular.module('necesitocr.mainView', ['ngRoute'])
 	$scope.searching = false;
 	$scope.searchContainerModel = {isBigContainer :  true};
 	$scope.results = [];
+	$scope.mood = "happy";
 	
 	$scope.searchTags = function(val) {		
 	    return $http.get('api/tag/searchByName', {
@@ -37,6 +38,11 @@ angular.module('necesitocr.mainView', ['ngRoute'])
 		console.log(requestObj);
 		$http.post($scope.searchUrl,requestObj).success(function(data){		
 			$scope.results = data.suppliers;
+			
+			if($scope.results.length <= 0){
+				$scope.mood = "sad";
+			}
+			
 			$scope.searchContainerModel.isBigContainer = false;			
 			$scope.showResults = true;
 			$scope.searching = false;

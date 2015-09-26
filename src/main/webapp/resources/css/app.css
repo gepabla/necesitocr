@@ -35,15 +35,16 @@ body .navbar-default.main-navbar a{
 }
 
 .center-form{
-	height: 252px;
-	width: 780px;
+	height: 380px;
+	width: 850px;
 	margin: auto;
 	position: absolute;
   	top: 0; left: 0; bottom: 0; right: 0;
+  	overflow: hidden;
 }
 
 .search-container{
-	background-color:#2E21AC !important;
+	background-color:#001387 !important;
     position: relative;
 }
 
@@ -93,10 +94,30 @@ body .navbar-default.main-navbar a{
 }
 
 #mainview .eva-container img{
-	width: 250px;
-	height: 250px;
+	position: absolute;
+}
+
+#mainview .eva-container img.static{
+	width: 210px;
+	height: 210px;
+	top:96px;
+	left:96px;
+}
+
+#mainview .eva-container.showResultsView img.static{
+	width: 210px;
+	height: 210px;
+	top:90px;
+}
+
+#mainview .eva-container img.searching{
+	width: 400px;
+	height: 400px;
 }
 
 #mainview .form-inline{
-	margin-top: 200px;
+	position: absolute;
+    z-index: 9;
+    top: 200px;
+    left: 350px;
 }
