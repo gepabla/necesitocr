@@ -34,6 +34,7 @@ public class TagWS {
 			List<TagDTO> dtos = tags.stream().map(tag -> {
 				TagDTO tmp = new TagDTO();
 				tmp.setName(tag.getName());
+				tmp.setIsGeo(tag.getIsGeo());
 				return tmp;
 			}).collect(Collectors.toList());
 			response.setTags(dtos);			
@@ -49,13 +50,14 @@ public class TagWS {
 	}
 	
 	@RequestMapping(value="/searchByName", method = RequestMethod.GET)
-	public TagResponse searchByName(@RequestParam String tagName,HttpServletResponse httpResponse){
+	public TagResponse searchByName(@RequestParam String tagName,@RequestParam Boolean isGeo,HttpServletResponse httpResponse){
 		TagResponse response = new TagResponse();
 		try {
-			List<Tag> tags = service.searchByName("%"+tagName+"%"); 			
+			List<Tag> tags = service.searchByName("%"+tagName+"%",isGeo); 			
 			List<TagDTO> dtos = tags.stream().map(tag -> {
 				TagDTO tmp = new TagDTO();
 				tmp.setName(tag.getName());
+				tmp.setIsGeo(tag.getIsGeo());
 				return tmp;
 			}).collect(Collectors.toList());
 			response.setTags(dtos);			

@@ -19,8 +19,8 @@ public class TagServiceImpl implements TagService {
 	}
 
 	@Override
-	public List<Tag> searchByName(String tagName) {
-		return tagRepo.findByNameLike(tagName);
+	public List<Tag> searchByName(String tagName, Boolean isGeo) {
+		return tagRepo.findByNameLikeAndIsGeo(tagName,isGeo);
 	}
 
 }

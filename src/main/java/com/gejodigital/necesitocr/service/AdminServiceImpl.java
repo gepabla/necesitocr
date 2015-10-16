@@ -22,6 +22,7 @@ import com.gejodigital.necesitocr.repositories.WordArticleRepository;
 public class AdminServiceImpl implements AdminService {
 	
 	private final static int tagsIndex = 4;
+	private final static int geoTagsIndex = 5;
 	private final static int supplierAddressIndex = 3;
 	private final static int supplierDescriptionIndex = 1;
 	private final static int supplierNameIndex = 0;
@@ -58,27 +59,33 @@ public class AdminServiceImpl implements AdminService {
 			
 			System.out.println("salvado " + supTmpClone.getSupplierId() + " " + supTmpClone.getName());
 			
-			List<String> tagNames = Arrays.asList(supplierArr.get(tagsIndex).split(","));
-			tagNames.forEach(tagName -> {
-				System.out.println("Procesando este tag name: " + tagName);
-				Tag tagTmp = tagR.findFirstByName(tagName);
-				SupplierTag spTmp = new SupplierTag();
-				if(tagTmp == null){
-					tagTmp = new Tag();
-					tagTmp.setName(tagName);
-					tagTmp.setTagId(null);
-					tagTmp = tagR.save(tagTmp);
-					System.out.println("Tag name no existe, fue creado " + tagName);
-				}
-				
-				spTmp.setSupplier(supTmpClone);
-				spTmp.setTag(tagTmp);
-				spTmp.setSupplierTagsId(null);
-				spTmp = stR.save(spTmp);
-				System.out.println("Creando sup tag para este tag: " + tagTmp.getName() + " para este sup: " + supTmpClone.getName());
-			});
+			saveTags(tagsIndex,supplierArr,supTmpClone,false);
+			saveTags(geoTagsIndex,supplierArr,supTmpClone,true);
 		});
 		
+	}
+
+	private void saveTags(int index,List<String> supplierArr,Supplier supTmpClone,boolean isGeo) {
+		List<String> tagNames = Arrays.asList(supplierArr.get(index).split(","));
+		tagNames.forEach(tagName -> {
+			System.out.println("Procesando este tag name: " + tagName);
+			Tag tagTmp = tagR.findFirstByName(tagName);
+			SupplierTag spTmp = new SupplierTag();
+			if(tagTmp == null){
+				tagTmp = new Tag();
+				tagTmp.setName(tagName);
+				tagTmp.setTagId(null);
+				tagTmp.setIsGeo(isGeo);
+				tagTmp = tagR.save(tagTmp);
+				System.out.println("Tag name no existe, fue creado " + tagName);
+			}
+			
+			spTmp.setSupplier(supTmpClone);
+			spTmp.setTag(tagTmp);
+			spTmp.setSupplierTagsId(null);
+			spTmp = stR.save(spTmp);
+			System.out.println("Creando sup tag para este tag: " + tagTmp.getName() + " para este sup: " + supTmpClone.getName());
+		});
 	}
 
 	@Override

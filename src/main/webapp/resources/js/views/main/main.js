@@ -20,10 +20,11 @@ angular.module('necesitocr.mainView', ['ngRoute'])
 	$scope.results = [];
 	$scope.mood = "happy";
 	
-	$scope.searchTags = function(val) {		
+	$scope.searchTags = function(val,isGeo) {		
 	    return $http.get('api/tag/searchByName', {
 	      params: {
-	    	  tagName: val	        
+	    	  tagName: val,
+	    	  isGeo : isGeo
 	      }
 	    }).then(function(response){	    	
 	      return response.data.tags.map(function(item){

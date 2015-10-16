@@ -29,7 +29,10 @@ public class Tag implements Serializable {
 	private Integer tagId;
 
 	private String name;
-
+	
+	@Column(name="is_geo")
+	private Boolean isGeo;
+	
 	//bi-directional many-to-one association to SupplierTag
 	@OneToMany(mappedBy="tag")
 	private List<SupplierTag> supplierTags;
@@ -73,6 +76,14 @@ public class Tag implements Serializable {
 		supplierTag.setTag(null);
 
 		return supplierTag;
+	}
+
+	public Boolean getIsGeo() {
+		return isGeo;
+	}
+
+	public void setIsGeo(Boolean isGeo) {
+		this.isGeo = isGeo;
 	}
 
 }

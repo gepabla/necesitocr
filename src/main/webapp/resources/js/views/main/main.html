@@ -4,19 +4,21 @@
 	<div class="search-container" search-container="searchContainerModel">
 		<div class="center-form" >
 			<div class="eva-container" ng-show="searching"><img class="searching" src="resources/images/searching.gif"></div>
-			<div class="eva-container" ng-class="{showResultsView:showResults}" ng-hide="searching"><img class="static" src="resources/images/eva-web-{{mood}}.png"></div>
+			<div class="eva-container" ng-class="{showResultsView:showResults}" ng-hide="searching">
+				<img class="static" src="resources/images/eva-web-{{mood}}.png">				
+			</div>			
 			<form class="form-inline" ng-show="showSearch"> 
 				
 				<div class="form-group">
 					<label for="service">necesito</label> 
-					<input type="text" class="form-control" id="service" placeholder="fontanero" ng-model="searchTermService" typeahead="address for address in searchTags($viewValue)">
+					<input type="text" class="form-control" id="service" placeholder="fontanero" ng-model="searchTermService" typeahead="address for address in searchTags($viewValue,false)">
 				</div>
 				
 				<div class="form-group">
-					<label for="location">en</label> <input type="text" class="form-control" id="location" placeholder="Alajuela" ng-model="searchTermLocation" typeahead="address for address in searchTags($viewValue)">
+					<label for="location">en</label> <input type="text" class="form-control" id="location" placeholder="Alajuela" ng-model="searchTermLocation" typeahead="address for address in searchTags($viewValue,true)">
 				</div>
 				
-				<button type="submit" ng-click="search()" class="btn btn-default">buscar</button>
+				<button type="submit" ng-click="search()" class="btn btn-default" ng-disabled="searchTermLocation === '' || searchTermService === ''">buscar</button>
 			</form>
 		</div>		
 		

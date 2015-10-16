@@ -6,5 +6,5 @@ import com.gejodigital.necesitocr.entities.Tag;
 
 public interface TagService {
 	public Tag findByName(String name);
-	public List<Tag> searchByName(String tagName);
+	public List<Tag> searchByName(String tagName, Boolean isGeo);
 }
