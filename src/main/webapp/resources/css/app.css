@@ -118,6 +118,8 @@ body .navbar-default.main-navbar a{
 #mainview .form-inline{
 	position: absolute;
     z-index: 9;
-    top: 200px;
     left: 350px;
 }
+
+#mainview .form-inline.data{top: 200px;}
+#mainview .form-inline.messages{top: 165px;}

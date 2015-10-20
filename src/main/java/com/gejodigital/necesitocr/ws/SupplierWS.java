@@ -32,11 +32,13 @@ public class SupplierWS {
 	@Autowired private TagService tagService;
 	@Autowired private WordArticleService wordArticleService;
 	@Autowired private EntityManagerFactory emf;
+	private boolean shouldContinue = true;
 	
 	@RequestMapping(value="/getByTags", method = RequestMethod.POST)
 	public SupplierResponse getByTags(@RequestBody String searchTerm,HttpServletResponse httpResponse){
 		SupplierResponse response = new SupplierResponse();
-		try {					
+		shouldContinue = true;
+		try {
 			String cleanedSearchTerm = wordArticleService.cleanSearchTerm(searchTerm);			
 			List<String> tagNames = new ArrayList<String>();
 			Arrays.asList(cleanedSearchTerm.split("\\s+")).forEach(str -> {
@@ -51,28 +53,35 @@ public class SupplierWS {
 				List<Supplier> tmp = supplierService.findBySupplierTags_Tag_NameLike("%"+name+"%");
 				if(tmp != null && tmp.size() > 0){
 					suppliersTmp.addAll(tmp);
+				}else{
+					shouldContinue = false;
 				}
 			});			
-			List<Supplier> suppliers = suppliersTmp.stream().distinct().collect(Collectors.toList());
 			
-			String queryStr = "SELECT t.tagId FROM Tag t where " + builder.toString().replaceFirst("%or%", "").replace("%or%", "or");			
-			TypedQuery<Integer> query = emf.createEntityManager().createQuery(queryStr, Integer.class);
-			List<Integer> tagIds = query.getResultList();
+			List<SupplierDTO> dtos = new ArrayList<SupplierDTO>();
 			
-			List<Supplier> finalSuppliers = new ArrayList<Supplier>();
-			
-			suppliers.forEach(sup -> {
-				List<Integer> supTagIds = sup.getSupplierTags().stream().map(st -> st.getTag().getTagId()).collect(Collectors.toList());
-				if(supTagIds.containsAll(tagIds)){
-					finalSuppliers.add(sup);
-				}
-			});
-			
-			List<SupplierDTO> dtos = finalSuppliers.stream().distinct().map(sup -> {
-				SupplierDTO tmp = new SupplierDTO();
-				BeanUtils.copyProperties(sup, tmp);
-				return tmp;
-			}).collect(Collectors.toList());
+			if(shouldContinue){
+				List<Supplier> suppliers = suppliersTmp.stream().distinct().collect(Collectors.toList());
+				
+				String queryStr = "SELECT t.tagId FROM Tag t where " + builder.toString().replaceFirst("%or%", "").replace("%or%", "or");			
+				TypedQuery<Integer> query = emf.createEntityManager().createQuery(queryStr, Integer.class);
+				List<Integer> tagIds = query.getResultList();
+				
+				List<Supplier> finalSuppliers = new ArrayList<Supplier>();
+				
+				suppliers.forEach(sup -> {
+					List<Integer> supTagIds = sup.getSupplierTags().stream().map(st -> st.getTag().getTagId()).collect(Collectors.toList());
+					if(supTagIds.containsAll(tagIds)){
+						finalSuppliers.add(sup);
+					}
+				});
+				
+				dtos = finalSuppliers.stream().distinct().map(sup -> {
+					SupplierDTO tmp = new SupplierDTO();
+					BeanUtils.copyProperties(sup, tmp);
+					return tmp;
+				}).collect(Collectors.toList());
+			}
 			
 			response.setSuppliers(dtos);			
 			response.setMessage(HttpStatus.OK.getReasonPhrase());

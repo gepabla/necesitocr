@@ -6,19 +6,37 @@
 			<div class="eva-container" ng-show="searching"><img class="searching" src="resources/images/searching.gif"></div>
 			<div class="eva-container" ng-class="{showResultsView:showResults}" ng-hide="searching">
 				<img class="static" src="resources/images/eva-web-{{mood}}.png">				
-			</div>			
-			<form class="form-inline" ng-show="showSearch"> 
+			</div>
+			
+			<form class="form-inline messages" ng-hide="showSearch" autocomplete="off">
+				
+				<div ng-show="results.length > 0" class="alert alert-info">
+        			<a class="btn btn-xs btn-primary pull-right" ng-click="newSearch()" > Nueva búsqueda</a>
+        			Encontré estas opciones que te podrían interesar. &nbsp;
+    			</div>
+    			
+    			<div ng-show="results.length === 0" class="alert alert-danger">
+        			<a class="btn btn-xs btn-danger pull-right" ng-click="newSearch()" > Nueva búsqueda</a>
+        			De todas las posibles busquedas tenías que hacer esa... &nbsp;          			
+    			</div>
+    			 
+			</form>
+    			
+			<form class="form-inline data" ng-show="showSearch" autocomplete="off"> 
 				
 				<div class="form-group">
 					<label for="service">necesito</label> 
-					<input type="text" class="form-control" id="service" placeholder="fontanero" ng-model="searchTermService" typeahead="address for address in searchTags($viewValue,false)">
+					<input type="text" class="form-control" id="service" placeholder="fontanero" ng-model="searchTermService" 
+						autocomplete="off" typeahead="address for address in searchTags($viewValue,false)">
 				</div>
 				
 				<div class="form-group">
-					<label for="location">en</label> <input type="text" class="form-control" id="location" placeholder="Alajuela" ng-model="searchTermLocation" typeahead="address for address in searchTags($viewValue,true)">
+					<label for="location">en</label> <input type="text" class="form-control" id="location" placeholder="Alajuela" autocomplete="off" ng-model="searchTermLocation" typeahead="address for address in searchTags($viewValue,true)">
 				</div>
 				
 				<button type="submit" ng-click="search()" class="btn btn-default" ng-disabled="searchTermLocation === '' || searchTermService === ''">buscar</button>
+				
+				
 			</form>
 		</div>		
 		

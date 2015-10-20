@@ -51,4 +51,14 @@ angular.module('necesitocr.mainView', ['ngRoute'])
 		})
 	}
 	
+	$scope.newSearch = function(){
+		$scope.mood = "happy";
+		$scope.searchTermService = "";
+		$scope.searchTermLocation = "";
+		$scope.showResults = false;
+		$scope.searching = false;
+		$scope.showSearch = true;
+		$scope.searchContainerModel = {isBigContainer :  true};
+	}
+	
 }]);
